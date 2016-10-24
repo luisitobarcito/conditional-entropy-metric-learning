@@ -1,0 +1,5 @@
+*~
+*.mat
+*.fig
+*.eps
+data/

@@ -1,0 +1,32 @@
+Metric learning using matrix-based conditional entropy.
+-----------------------------------------------------------------------------------
+
+This set of functions reproduces the results of the UCI experiments in the paper:
+"Luis G Sanchez Giraldo and Jose Principe, Information Theoretic Learning Using 
+Infinitely Divisible Kernels. ICLR 2013."
+
+To run the experiments you must:
+
+-- Uncompress "Metric_Learning.tar.gz" to your desired working directory.
+-- Download the data.tar.gz from PERSONAL WEBPAGE uncompress in a desired location.
+-- Modify the "data_path" variable with the location of the data in your machine.
+-- Experiments reported in the above paper can be run by calling: 
+   -- "UCI_comparisons.m" 
+   -- "CEML_UMIS_faces.m"
+   -- "CEML_alpha_comparison.m"
+
+ 
+The function "CondEntropyMetricLearning.m" is a matlab implementation of the metric 
+learning algorithm described in the paper.   
+
+
+Implementations of NCA, ITML, LMNN, and MCML are part of the Matlab Toolbox for 
+Dimensionality Reduction by 
+	       "Laurens van der Maaten, Delft University of Technology"
+This toolbox can be obtained from http://homepage.tudelft.nl/19j49
+
+You are free to use, change, or redistribute this code in any way you want for 
+non-commercial purposes. However, it is appreciated if you maintain the name of the 
+original author.
+(C) Luis Gonzalo Sanchez Giraldo, 2014
+
