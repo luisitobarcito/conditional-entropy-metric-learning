@@ -2,19 +2,25 @@
 % want for non-commercial purposes. However, it is appreciated if you 
 % maintain the name of the original author.
 %
-% (C) Luis Gonzalo Sanchez Giraldo, 2014
+% (C) Luis Gonzalo Sanchez Giraldo, 2018
 
 clear all
 close all
 clc
 
-%% Load face Data
+%% Load MADELON Data
 % Modify this path to the actual location of your data folder
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-data_path = './data';  %% Your path to data goes here
+data_path = '/home/lgsanchez/work/Data/UCI_data/MADELON/';  %% Your path to data goes here
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 addpath(data_path);
-load facedata %% umas faces
+load('madelon_valid.data', '-ascii')%% load train data
+X = madelon_valid;
+clear madelon_valid;
+
+load('madelon_valid.labels', '-ascii')%% load train labels
+labels = madelon_valid;
+clear madelon_valid;  
 
 %% Preprocessing (centering, PCA and variance normalization)
 X = bsxfun(@minus, X, mean(X,1));
@@ -25,11 +31,11 @@ X = X/sqrt(trace(cov(X))/n_comp);
 
 
 %% Run Conditional Entropy Metric Learning 
-no_dims = 2;
+no_dims = 100;
 d_y = no_dims;
 sigma = sqrt(d_y);
 alpha = 1.01;
-param.n_iter = 500;
+param.n_iter = 1000;
 param.mu_in = 0.01;
 param.mu_fin = 0.01;
 [M, A, Y] = CondEntropyMetricLearning(X, labels, no_dims, sigma, alpha, param);
@@ -37,7 +43,7 @@ param.mu_fin = 0.01;
 
 %% Plot Results
 new_sigma = sqrt(2*trace(A'*A));
-K_y = real(guassianMatrix(Y, new_sigma));
+K_y = real(guassianMatrix([Y(labels == 1,:); Y(labels == -1,:)], new_sigma));
 figure
 subplot(121)
 scatter(Y(:,1),Y(:,2),12,labels)
